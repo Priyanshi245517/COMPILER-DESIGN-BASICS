@@ -1,0 +1,81 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+
+\\DEFINING OPERATORS AND KEYWORDS.
+char operators[4]={'+','-','*','='};
+
+char *keywords[8]={"int","float","char","if","else","while","for","return"};
+
+int main(){
+    int i;
+\\opening the file example.txt in read mode for compiler to read the content of the file
+FILE*fp=fopen("example.txt","r");
+if(fp==NULL){
+    printf("Error opening file.\n");
+    return 1;
+}
+\\starting the phase1.
+printf("phase 1 of compilation has started from this moment");
+
+\\defining the words in the file we have given so we don't face any difficulty in further comparing .
+
+char word[50];
+
+\\creating a while loop so the loop keeps running for each word of the program.
+
+while(fscanf(fp,"%s",word)!=EOF){
+
+\\checking for keywords using for loop and if else statement.
+
+int iskeyword=0;
+for(i=0;i<8;i++){
+        if(strcmp(word,keywords[i])==0){
+    iskeyword=1;
+    break;
+        }
+}
+
+\\prining the keyword found.
+
+if(iskeyword){
+    printf("keywords= %s\n",word);
+}
+
+\\repeating the process for operators.
+
+int isoperator;
+for(i=0;i<4;i++){
+    if(word[0]==operators[i]){
+        printf("operator = %s\n",word);
+    break;
+    }
+}
+
+\\now defining and checking for identifiers 
+
+if(!iskeyword&&!isoperator){
+    if(isalpha(word[0])||word[0]=='_'){
+        printf("identifier = %s\n",word);
+
+    }
+}
+}
+fclose(fp);
+return 0;
+
+}
+
+/*for reference 
+exaple.txt has the following code for compilation
+#include<stdio.h>
+#include<conio.h>
+int main(){
+int a=10;
+int b=12;
+return 0;
+}
+*/
+
